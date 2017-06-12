@@ -129,17 +129,34 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo va
 
 		if command == "/rooster 6v":
 			rooster("6v", chat_id)
+		elif command == "/rooster 6V":
+			rooster("6v", chat_id)
+
 		elif command == "/rooster 5v":
 			rooster("5v", chat_id)
+		elif command == "/rooster 5V":
+			rooster("5v", chat_id)
+
 		elif command == "/rooster 4v":
 			rooster("4v", chat_id)
+		elif command == "/rooster 4V":
+			rooster("4v", chat_id)
+
 		elif command == "/rooster 3v":
 			rooster("3v", chat_id)
+		elif command == "/rooster 3V":
+			rooster("3v", chat_id)
+
 		elif command == "/rooster 2v":
 			rooster("2v", chat_id)
+		elif command == "/rooster 2V":
+			rooster("2v", chat_id)
+
 		elif command == "/rooster 1v":
-			print 'test'
 			rooster("1v", chat_id)
+		elif command == "/rooster 1V":
+			rooster("1v", chat_id)
+
 		else:
 			bot.sendMessage(chat_id, "Klas 1v")
 			rooster("1v", chat_id)
