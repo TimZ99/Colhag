@@ -4,5 +4,3 @@ weer - Actuele weer + kleding 'advies'
 hoi - Gewoon even hoi zeggen
 help - Geeft informatie over de verschillende commando's
 credits - En de credits gaan naaaaarrrrr....
-logenable - Enable logging in the terminal
-logdisable - Disable logging in the terminal
