@@ -59,12 +59,35 @@ def rooster(klas, id):
         bot.sendMessage(id, """\
     Er zijn geen roosterwijzigingen!
     """)
+
+# Handle Location
+#def handle(location):
+
 # Handle Commands
 def handle(msg):
-	chat_id = msg['chat']['id']
-	command = msg['text']
+	com = 1
+	lo = 1
+	try:
+		msg['location']['longitude']
+	except KeyError:
+		lo = None
+	try:
+		msg['text']
+	except KeyError:
+		com = None
+
+	if lo is None and com is None:
+		command = "Not a location or text"
+	elif lo is not None:
+		lon = "%.9f" % msg['location']['longitude']
+		lat = "%.9f" % msg['location']['latitude']
+		command = "Sending locatie lon: "+lon+" Lat: "+lat
+	else:
+		command = msg['text']
 
 	print 'Got command: %s' % command
+
+	chat_id = msg['chat']['id']
 
 	if(command == '/start'):
 
@@ -134,22 +157,44 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo va
 			bot.sendMessage(chat_id, "/mijnklasstaaternietbij")
 			#reply_markup=markup)
 
+    # Handle '/mijnklasstaaternietbij'
 	elif(command == '/mijnklasstaaternietbij'):
 		bot.sendMessage(chat_id, "Deze functie werk momenteel alleen voor VIA klassen. Staat jouw (reguliere) klas er niet bij? Stuur dan even een mail naar Tim@Xervion.nl en misschien voegen we jouw klas wel toe ;).")
-'''# Handle '/weer'
-@bot.message_handler(commands=['weer'])
-def send_welcome(message):
-    bot.send_message(chat_id, """\
+
+    # Handle '/weer'
+	elif(command == '/weer'):
+		bot.sendMessage(chat_id, """\
 Stuur je locatie!
 (Dit werkt niet in groepen!)
 """)
-    if message.chat.type == "group":
-        terminal(message.text, message.chat.title, 'Anonymous user')
-    elif message.chat.type == "supergroup":
-        terminal(message.text, message.chat.title, 'Anonymous user')
-    elif message.chat.type == "private":
-        terminal(message.text, message.chat.first_name, message.chat.last_name)
+    #if message.chat.type == "group":
+    #    terminal(message.text, message.chat.title, 'Anonymous user')
+    #elif message.chat.type == "supergroup":
+    #    terminal(message.text, message.chat.title, 'Anonymous user')
+    #elif message.chat.type == "private":
+    #    terminal(message.text, message.chat.first_name, message.chat.last_name)
+    # Handle 'location'
+	elif(lo is not None):
+		url='http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid=d89ab85c7700a2ee6e26475397209c20'
+		json_obj=urllib2.urlopen(url)
+		data=json.load(json_obj)
+		for i in data['weather']:
+			if i['main']=='Rain':
+			    bot.sendMessage(chat_id, "Kut! Het regent weer!")
+		K=data['main']['temp']
+		celsius=K-273.15
+        #print "Tem:"
+        #print celsius
+		if celsius>20:
+			bot.sendMessage(chat_id, "Het is lekker!")
+		elif celsius>5 and celsius<20:
+			bot.sendMessage(chat_id, "Het is een beetje matig weer, het is niet warm, het is niet koud!")
+		elif celsius<5:
+			bot.sendMessage(chat_id, "Het is koud!")
+		celsius = "%.1f" % celsius
+		bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
 
+'''
 # Handle '/logenable'
 @bot.message_handler(commands=['logenable'])
 def send_welcome(message):
@@ -193,39 +238,9 @@ def echo_message(message):
         terminal(message.text, message.chat.title, 'Anonymous user')
     elif message.chat.type == "private":
         terminal(message.text, message.chat.first_name, message.chat.last_name)
-
-# Handle 'location'
-@bot.message_handler(func=lambda message: True, content_types=['location'])
-def send_welcome(message):
-    lan = "%.9f" % message.location.latitude
-    lon = "%.9f" % message.location.longitude
-    url='http://api.openweathermap.org/data/2.5/weather?lat='+lan+'&lon='+lon+'&appid=d89ab85c7700a2ee6e26475397209c20'
-    json_obj=urllib2.urlopen(url)
-    data=json.load(json_obj)
-    for i in data['weather']:
-        if i['main']=='Rain':
-            bot.send_message(message.chat.id, "Kut! Het regent weer!")
-    K=data['main']['temp']
-    celsius=K-273.15
-    #print "Tem:"
-    #print celsius
-    if celsius>20:
-        bot.send_message(message.chat.id, "Het is lekker!")
-    elif celsius>5 and celsius<20:
-        bot.send_message(message.chat.id, "Het is een beetje jammer weer, niet warm, niet koud!")
-    elif celsius<5:
-        bot.send_message(message.chat.id, "Het is koud!")
-    celsius = "%.1f" % celsius
-    bot.send_message(message.chat.id, "Het is "+celsius+" graden.")
-    #bot.send_message(message.chat.id, message.location.longitude + message.location.latitude)
-    text="Locatie: "+lan+" "+lon
-    if message.chat.type == "group":
-        terminal(text, message.chat.title, all_members_are_administrators)
-    elif message.chat.type == "supergroup":
-        terminal(text, message.chat.title, message.chat.username)
-    elif message.chat.type == "private":
-        terminal(text, message.chat.first_name, message.chat.last_name)
 '''
+
+
 if log == 'false':
     print 'Log: %s' % log
 elif log == 'true':
@@ -237,6 +252,7 @@ else:
 bot = telepot.Bot(API_TOKEN)
 
 MessageLoop(bot, handle).run_as_thread()
+print ('Listening ...')
 
 while(1):
 	time.sleep(10)
