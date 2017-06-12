@@ -8,14 +8,7 @@ import logging
 import urllib2
 import json
 from telepot.loop import MessageLoop
-from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
-
-log = 'false'
-def terminal(text, firstname, lastname):
-    sys.stderr.write("Message: " + text + "\nSend by:" + firstname + " " + lastname + "\n\n")
-    #sys.stderr.write("Message: " + text + "\n")
-    #sys.stderr.write("Message: " + message.text + "\nSend by:" + message.chat.first_name + " " + message.chat.last_name + "\n\n")
-
+print "\n"
 import getrooster1v
 import getrooster2v
 import getrooster3v
@@ -60,9 +53,6 @@ def rooster(klas, id):
     Er zijn geen roosterwijzigingen!
     """)
 
-# Handle Location
-#def handle(location):
-
 # Handle Commands
 def handle(msg):
 	com = 1
@@ -90,10 +80,6 @@ def handle(msg):
 	chat_id = msg['chat']['id']
 
 	if(command == '/start'):
-
-        #Mijn hersenen zijn geschreven in Python en draaien op een Raspberry PI 3.
-        #Ik ben erg blij dat je mij gestart hebt, want ik wil graag laten zien wat ik kan.
-
 		bot.sendMessage(chat_id, """
 Hoi, ik ben Colhag en ik ben een bot.
 Ik kan je het weer laten zien en kijken of je klas een roosterwijziging heeft.
@@ -125,7 +111,9 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo va
 
     # Handle '/rooster'
 	elif('/rooster' in command):
-		#itembtn6 = inline_keyboard('/rooster 1v')
+
+        #TODO
+        #Add custom Keyboard
 
 		if command == "/rooster 6v":
 			rooster("6v", chat_id)
@@ -172,7 +160,6 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo va
 			rooster("6v", chat_id)
 			bot.sendMessage(chat_id, "Om voortaan alleen jouw klas te zien dien je '/rooster (jouw klas)' te typen.")
 			bot.sendMessage(chat_id, "/mijnklasstaaternietbij")
-			#reply_markup=markup)
 
     # Handle '/mijnklasstaaternietbij'
 	elif(command == '/mijnklasstaaternietbij'):
@@ -184,13 +171,7 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo va
 Stuur je locatie!
 (Dit werkt niet in groepen!)
 """)
-    #if message.chat.type == "group":
-    #    terminal(message.text, message.chat.title, 'Anonymous user')
-    #elif message.chat.type == "supergroup":
-    #    terminal(message.text, message.chat.title, 'Anonymous user')
-    #elif message.chat.type == "private":
-    #    terminal(message.text, message.chat.first_name, message.chat.last_name)
-    # Handle 'location'
+
 	elif(lo is not None):
 		url='http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid=d89ab85c7700a2ee6e26475397209c20'
 		json_obj=urllib2.urlopen(url)
@@ -200,8 +181,6 @@ Stuur je locatie!
 			    bot.sendMessage(chat_id, "Kut! Het regent weer!")
 		K=data['main']['temp']
 		celsius=K-273.15
-        #print "Tem:"
-        #print celsius
 		if celsius>20:
 			bot.sendMessage(chat_id, "Het is lekker!")
 		elif celsius>5 and celsius<20:
@@ -214,7 +193,7 @@ Stuur je locatie!
 bot = telepot.Bot(API_TOKEN)
 
 MessageLoop(bot, handle).run_as_thread()
-print ('Listening ...')
+print ('Listening ... \n')
 
 while(1):
 	time.sleep(10)
