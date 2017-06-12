@@ -1,5 +1,4 @@
 import requests
-import re
 page = requests.get("http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla.htm").text
 ro = page.find(">6v<")
 if ro == -1:
