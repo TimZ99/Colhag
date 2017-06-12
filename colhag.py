@@ -194,61 +194,6 @@ Stuur je locatie!
 		celsius = "%.1f" % celsius
 		bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
 
-'''
-# Handle '/logenable'
-@bot.message_handler(commands=['logenable'])
-def send_welcome(message):
-    bot.send_message(message.chat.id, "Log enabled")
-    log = 'true'
-    logger = telebot.logger
-    telebot.logger.setLevel(logging.DEBUG) # Outputs debug messages to console.
-    if message.chat.type == "group":
-        terminal(message.text, message.chat.title, 'Anonymous user')
-    elif message.chat.type == "supergroup":
-        terminal(message.text, message.chat.title, 'Anonymous user')
-    elif message.chat.type == "private":
-        terminal(message.text, message.chat.first_name, message.chat.last_name)
-
-# Handle '/logdisable'
-@bot.message_handler(commands=['logdisable'])
-def send_welcome(message):
-    bot.send_message(message.chat.id, "Log disabled")
-    log = 'false'
-    logger = telebot.logger
-    telebot.logger.setLevel(logging.NOTSET) # Outputs no messages to console.
-    if message.chat.type == "group":
-        terminal(message.text, message.chat.title, 'Anonymous user')
-    elif message.chat.type == "supergroup":
-        terminal(message.text, message.chat.title, 'Anonymous user')
-    elif message.chat.type == "private":
-        terminal(message.text, message.chat.first_name, message.chat.last_name)
-
-# Handle all other messages with content_type 'text'
-@bot.message_handler(func=lambda message: True)
-def echo_message(message):
-    #bot.send_message(message.chat.id, "Ik snap \"" + message.text + "\" niet!")
-    markup = types.ReplyKeyboardMarkup(row_width=1)
-    itembtn1 = types.KeyboardButton('/rooster')
-    itembtn2 = types.KeyboardButton('/weer')
-    markup.add(itembtn1, itembtn2)
-    bot.send_message(message.chat.id, "Sneltoets:", reply_markup=markup)
-    if message.chat.type == "group":
-        terminal(message.text, message.chat.title, 'Anonymous user')
-    elif message.chat.type == "supergroup":
-        terminal(message.text, message.chat.title, 'Anonymous user')
-    elif message.chat.type == "private":
-        terminal(message.text, message.chat.first_name, message.chat.last_name)
-'''
-
-
-if log == 'false':
-    print 'Log: %s' % log
-elif log == 'true':
-    print 'Log: %s' % log
-else:
-    log = 'false'
-    print 'Log: %s' % log
-
 bot = telepot.Bot(API_TOKEN)
 
 MessageLoop(bot, handle).run_as_thread()
