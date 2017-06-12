@@ -3,10 +3,6 @@
 # Import
 import time
 import telepot
-import sys
-import requests
-import re
-import logging
 import urllib2
 import json
 from telepot.loop import MessageLoop
@@ -24,39 +20,39 @@ import getrooster6v
 API_TOKEN = '375453632:AAFzfRoqAbjZB5Q90OnJ45ye3q02tTPmVyU'
 
 # Check if getrooster is true, if so show url to website
-def rooster(klas, id):
+def rooster(klas, chatid):
     if getrooster1v.roosterwijziging == "true" and klas == "1v":
-        bot.sendMessage(id, """\
+        bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_1v.htm
     """)
     elif getrooster2v.roosterwijziging == "true":
-        bot.sendMessage(id, """\
+        bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_2v.htm
     """)
     elif getrooster3v.roosterwijziging == "true":
-        bot.sendMessage(id, """\
+        bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_3v.htm
     """)
     elif getrooster4v.roosterwijziging == "true":
-        bot.sendMessage(id, """\
+        bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_4v.htm
     """)
     elif getrooster5v.roosterwijziging == "true":
-        bot.sendMessage(id, """\
+        bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_5v.htm
     """)
     elif getrooster6v.roosterwijziging == "true":
-        bot.sendMessage(id, """\
+        bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_6v.htm
     """)
     else:
-        bot.sendMessage(id, """\
+        bot.sendMessage(chatid, """\
     Er zijn geen roosterwijzigingen!
     """)
 
@@ -188,8 +184,7 @@ Stuur je locatie!
 """)
     # Handle 'location' and show weather
 	elif(lo is not None):
-		url='http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid=d89ab85c7700a2ee6e26475397209c20'
-		json_obj=urllib2.urlopen(url)
+		json_obj=urllib2.urlopen('http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid=d89ab85c7700a2ee6e26475397209c20')
 		data=json.load(json_obj)
 		for i in data['weather']:
 			if i['main']=='Rain':
