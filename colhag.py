@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+# Import
 import time
 import telepot
 import sys
@@ -9,6 +11,8 @@ import urllib2
 import json
 from telepot.loop import MessageLoop
 print "\n"
+
+# Getrooster for all classes
 import getrooster1v
 import getrooster2v
 import getrooster3v
@@ -16,7 +20,10 @@ import getrooster4v
 import getrooster5v
 import getrooster6v
 
+# API token
 API_TOKEN = '375453632:AAFzfRoqAbjZB5Q90OnJ45ye3q02tTPmVyU'
+
+# Check if getrooster is true, if so show url to website
 def rooster(klas, id):
     if getrooster1v.roosterwijziging == "true" and klas == "1v":
         bot.sendMessage(id, """\
@@ -55,6 +62,7 @@ def rooster(klas, id):
 
 # Handle Commands
 def handle(msg):
+    # Check is message is location, text of something else
 	com = 1
 	lo = 1
 	try:
@@ -75,10 +83,13 @@ def handle(msg):
 	else:
 		command = msg['text']
 
+    # Print command in terminal
 	print 'Got command: %s' % command
 
+    # Get chat id
 	chat_id = msg['chat']['id']
 
+    # Handle '/start'
 	if(command == '/start'):
 		bot.sendMessage(chat_id, """
 Hoi, ik ben Colhag en ik ben een bot.
@@ -87,6 +98,7 @@ Weten hoe het werkt of heb je vragen? Typ '/help'.
 
 Wil je weten door wie ik gemaakt ben? Typ '/credits', doe maar, is leuk ;).
 """)
+    # Handle '/help'
 	elif(command == '/help'):
 		bot.sendMessage(chat_id, """
 Commando's om mij te besturen zijn:
@@ -97,6 +109,7 @@ Commando's om mij te besturen zijn:
 /rooster Bekijk of er roosterwijzigingen zijn
 /weer Bekijk de weersvoorspelling
 """)
+    # Handle '/credits'
 	elif(command == '/credits'):
 		bot.sendMessage(chat_id, """
 En de credits gaaaaan naaaaar... (trommelgeroffel)
@@ -113,8 +126,9 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo va
 	elif('/rooster' in command):
 
         #TODO
-        #Add custom Keyboard
+        # Add custom Keyboard
 
+        # Show is there is a change per class
 		if command == "/rooster 6v":
 			rooster("6v", chat_id)
 		elif command == "/rooster 6V":
@@ -145,6 +159,7 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo va
 		elif command == "/rooster 1V":
 			rooster("1v", chat_id)
 
+        # If no class is specified print all classes
 		else:
 			bot.sendMessage(chat_id, "Klas 1v")
 			rooster("1v", chat_id)
@@ -171,7 +186,7 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo va
 Stuur je locatie!
 (Dit werkt niet in groepen!)
 """)
-
+    # Handle 'location' and show weather
 	elif(lo is not None):
 		url='http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid=d89ab85c7700a2ee6e26475397209c20'
 		json_obj=urllib2.urlopen(url)
@@ -189,6 +204,7 @@ Stuur je locatie!
 			bot.sendMessage(chat_id, "Het is koud!")
 		celsius = "%.1f" % celsius
 		bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
+
 
 bot = telepot.Bot(API_TOKEN)
 
