@@ -4,6 +4,7 @@
 import time
 import telepot
 import urllib2
+import urllib
 import json
 from telepot.loop import MessageLoop
 print "\n"
@@ -184,13 +185,14 @@ Stuur je locatie!
 """)
     # Handle 'location' and show weather
 	elif(lo is not None):
-		json_obj=urllib2.urlopen('http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid=d89ab85c7700a2ee6e26475397209c20')
-		data=json.load(json_obj)
-		for i in data['weather']:
-			if i['main']=='Rain':
-			    bot.sendMessage(chat_id, "Kut! Het regent weer!")
-		K=data['main']['temp']
-		celsius=K-273.15
+		baseurl = "https://query.yahooapis.com/v1/public/yql?"
+		yql_query = "select item.condition from weather.forecast where woeid = 730269"
+		yql_url = baseurl + urllib.urlencode({'q':yql_query}) + "&format=json"
+		result = urllib2.urlopen(yql_url).read()
+		data = json.loads(result)
+		K = float(data['query']['results']['channel']['item']['condition']['temp'])
+		print K
+		celsius=(K-32)/1.8000
 		if celsius>20:
 			bot.sendMessage(chat_id, "Het is lekker!")
 		elif celsius>5 and celsius<20:
@@ -198,7 +200,10 @@ Stuur je locatie!
 		elif celsius<5:
 			bot.sendMessage(chat_id, "Het is koud!")
 		celsius = "%.1f" % celsius
-		bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
+		bot.sendMessage(chat_id, """\
+Het is """+celsius+""" graden. \n En het is: """+
+data['query']['results']['channel']['item']['condition']['text']+"""
+""")
 
 
 bot = telepot.Bot(API_TOKEN)
