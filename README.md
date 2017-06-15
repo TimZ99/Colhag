@@ -1,5 +1,5 @@
 # Colhag bot
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c852f36332d3445ba4cbdca01151acfc)](https://www.codacy.com/app/TimZ99/Colhag?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TimZ99/Colhag&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5c24457e8c654ccba247d5e112f55b6d)](https://www.codacy.com/app/TimZ99/Colhag?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TimZ99/Colhag&amp;utm_campaign=Badge_Grade)
 
 Colhag bot is based on Telegram API and uses [Telepot](https://github.com/nickoala/telepot).
 
