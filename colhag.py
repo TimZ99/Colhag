@@ -16,8 +16,12 @@ import getrooster4v
 import getrooster5v
 import getrooster6v
 
-# API token
-API_TOKEN = '375453632:AAFzfRoqAbjZB5Q90OnJ45ye3q02tTPmVyU'
+# Import token
+import api
+
+# Check if token is not empty
+if api.token == '':
+    exit("Error: No token found in api.py!")
 
 # Check if getrooster is true, if so show url to website
 def rooster(klas, chatid):
@@ -200,8 +204,7 @@ Stuur je locatie!
 		celsius = "%.1f" % celsius
 		bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
 
-
-bot = telepot.Bot(API_TOKEN)
+bot = telepot.Bot(api.token)
 
 MessageLoop(bot, handle).run_as_thread()
 print ('Listening ... \n')
