@@ -112,7 +112,7 @@ En de credits gaaaaan naaaaar... (trommelgeroffel)
 
 Code > Tim
 Getest door > Jaxon
-Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo vaak :P
+Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer (zo vaak) :P
 """)
     # Handle '/hoi'
 	elif(command == '/hoi'):
