@@ -8,6 +8,9 @@ import json
 from telepot.loop import MessageLoop
 print "\n"
 
+# Import token
+import token
+
 # Getrooster for all classes
 import getrooster1v
 import getrooster2v
@@ -15,9 +18,6 @@ import getrooster3v
 import getrooster4v
 import getrooster5v
 import getrooster6v
-
-# API token
-API_TOKEN = '375453632:AAFzfRoqAbjZB5Q90OnJ45ye3q02tTPmVyU'
 
 # Check if getrooster is true, if so show url to website
 def rooster(klas, chatid):
@@ -201,7 +201,7 @@ Stuur je locatie!
 		bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
 
 
-bot = telepot.Bot(API_TOKEN)
+bot = telepot.Bot(token.API_TOKEN)
 
 MessageLoop(bot, handle).run_as_thread()
 print ('Listening ... \n')
