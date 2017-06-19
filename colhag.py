@@ -8,6 +8,18 @@ import json
 from telepot.loop import MessageLoop
 print "\n"
 
+# Import token
+import api
+
+# Check if token is not empty
+if api.token == '':
+    exit("Error: No token found in api.py!")
+
+# Check if token is test token and show warning
+if api.token == '400489233:AAHl7rWEG-9Clp1qXiPg4qktnryub-cGpMg':
+    print "========================== WARNING: CURRENTLY USING TEST BOT! ========================== \n"
+    print "You're using the bot test api token. Only use this token voor testing, not as production!\n"
+
 # Getrooster for all classes
 import getrooster1v
 import getrooster2v
@@ -16,9 +28,6 @@ import getrooster4v
 import getrooster5v
 import getrooster6v
 
-# API token
-API_TOKEN = '375453632:AAFzfRoqAbjZB5Q90OnJ45ye3q02tTPmVyU'
-
 # Check if getrooster is true, if so show url to website
 def rooster(klas, chatid):
     if getrooster1v.roosterwijziging == "true" and klas == "1v":
@@ -26,27 +35,27 @@ def rooster(klas, chatid):
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_1v.htm
     """)
-    elif getrooster2v.roosterwijziging == "true":
+    elif getrooster2v.roosterwijziging == "true" and klas == "2v":
         bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_2v.htm
     """)
-    elif getrooster3v.roosterwijziging == "true":
+    elif getrooster3v.roosterwijziging == "true" and klas == "3v":
         bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_3v.htm
     """)
-    elif getrooster4v.roosterwijziging == "true":
+    elif getrooster4v.roosterwijziging == "true" and klas == "4v":
         bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_4v.htm
     """)
-    elif getrooster5v.roosterwijziging == "true":
+    elif getrooster5v.roosterwijziging == "true" and klas == "5v":
         bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_5v.htm
     """)
-    elif getrooster6v.roosterwijziging == "true":
+    elif getrooster6v.roosterwijziging == "true" and klas == "6v":
         bot.sendMessage(chatid, """\
     Er is een roosterwijziging!
     http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla_6v.htm
@@ -112,7 +121,7 @@ En de credits gaaaaan naaaaar... (trommelgeroffel)
 
 Code > Tim
 Getest door > Jaxon
-Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer zo vaak :P
+Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer (zo vaak) :P
 """)
     # Handle '/hoi'
 	elif(command == '/hoi'):
@@ -200,8 +209,7 @@ Stuur je locatie!
 		celsius = "%.1f" % celsius
 		bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
 
-
-bot = telepot.Bot(API_TOKEN)
+bot = telepot.Bot(api.token)
 
 MessageLoop(bot, handle).run_as_thread()
 print ('Listening ... \n')
