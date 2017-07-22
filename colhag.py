@@ -15,10 +15,9 @@ import api
 if api.token == '':
     exit("Error: No token found in api.py!")
 
-# Check if token is test token and show warning
-if api.token == '400489233:AAHl7rWEG-9Clp1qXiPg4qktnryub-cGpMg':
-    print "========================== WARNING: CURRENTLY USING TEST BOT! ========================== \n"
-    print "You're using the bot test api token. Only use this token voor testing, not as production!\n"
+# Check if weather api is not empty
+if api.weather == '':
+    print("Error: No token found for the weather api in api.py! \n The weather function will be disabled.")
 
 # Getrooster for all classes
 import getrooster1v
@@ -193,21 +192,24 @@ Stuur je locatie!
 """)
     # Handle 'location' and show weather
 	elif(lo is not None):
-		json_obj=urllib2.urlopen('http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid=d89ab85c7700a2ee6e26475397209c20')
-		data=json.load(json_obj)
-		for i in data['weather']:
-			if i['main']=='Rain':
-			    bot.sendMessage(chat_id, "Kut! Het regent weer!")
-		K=data['main']['temp']
-		celsius=K-273.15
-		if celsius>20:
-			bot.sendMessage(chat_id, "Het is lekker!")
-		elif celsius>5 and celsius<20:
-			bot.sendMessage(chat_id, "Het is een beetje matig weer, het is niet warm, het is niet koud!")
-		elif celsius<5:
-			bot.sendMessage(chat_id, "Het is koud!")
-		celsius = "%.1f" % celsius
-		bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
+		if api.weather != '':
+			json_obj=urllib2.urlopen('http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+api.weather)
+			data=json.load(json_obj)
+			for i in data['weather']:
+				if i['main']=='Rain':
+					bot.sendMessage(chat_id, "Kut! Het regent weer!")
+			K=data['main']['temp']
+			celsius=K-273.15
+			if celsius>20:
+				bot.sendMessage(chat_id, "Het is lekker!")
+			elif celsius>5 and celsius<20:
+				bot.sendMessage(chat_id, "Het is een beetje matig weer, het is niet warm, het is niet koud!")
+			elif celsius<5:
+				bot.sendMessage(chat_id, "Het is koud!")
+			celsius = "%.1f" % celsius
+			bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
+		else:
+			bot.sendMessage(chat_id, "Deze functie is momenteel niet geactiveerd. Er is geen API token opgegeven.")
 
 bot = telepot.Bot(api.token)
 

@@ -13,6 +13,10 @@ Later rewritten in collaboration with [hous3m4ster](https://github.com/hous3m4st
 
 Navigate to the project folder
 
+Change the token in `api.py`.
+
+Get a token for the weather function on [openweathermap.org](https://openweathermap.org/api).
+
 Use `python colhag.py` to start the bot.
 
 Commands can be found in the `commands` file
