@@ -7,16 +7,15 @@ The Colhag project was originally written by [TimZ99](https://github.com/TimZ99)
 
 Later rewritten in collaboration with [hous3m4ster](https://github.com/hous3m4ster).
 
+## Requirements
+- Python 3
+- Telepot
 
 ## How to use
-`pip install telepot`
-
-Navigate to the project folder
-
-Change the token in `api.py`.
-
-Get a token for the weather function on [openweathermap.org](https://openweathermap.org/api).
-
-Use `python colhag.py` to start the bot.
+1. `pip install telepot`
+2. Navigate to the project folder.
+3. Add your token in the  `api.py` file.
+4. (Optional) Get a token for the weather function on [openweathermap.org](https://openweathermap.org/api).
+5. Use `python colhag.py` to start the bot.
 
 Commands can be found in the `commands` file
