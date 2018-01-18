@@ -5,5 +5,4 @@ if ro == -1:
     roosterwijziging = "false"
 else:
     roosterwijziging = "true"
-print 'Klas 2v: ' + roosterwijziging
-#print ro
+print ('Klas 2v: ' + roosterwijziging)
