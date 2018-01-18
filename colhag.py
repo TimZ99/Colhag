@@ -3,10 +3,10 @@
 # Import
 import time
 import telepot
-import urllib2
+import urllib
 import json
 from telepot.loop import MessageLoop
-print "\n"
+from telepot.namedtuple import ReplyKeyboardMarkup, KeyboardButton
 
 # Import token
 import api
@@ -17,7 +17,7 @@ if api.token == '':
 
 # Check if weather api is not empty
 if api.weather == '':
-    print("Error: No token found for the weather api in api.py! \n The weather function will be disabled.")
+    print ("Error: No token found for the weather api in api.py! \n The weather function will be disabled.")
 
 # Getrooster for all classes
 import getrooster1v
@@ -88,7 +88,7 @@ def handle(msg):
 		command = msg['text']
 
     # Print command in terminal
-	print 'Got command: %s' % command
+	print ('Got command: %s' % command)
 
     # Get chat id
 	chat_id = msg['chat']['id']
@@ -118,8 +118,8 @@ Commando's om mij te besturen zijn:
 		bot.sendMessage(chat_id, """
 En de credits gaaaaan naaaaar... (trommelgeroffel)
 
-Code > Tim
-Getest door > Jaxon
+Code door Tim
+Getest door Jaxon
 Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer (zo vaak) :P
 """)
     # Handle '/hoi'
@@ -186,14 +186,16 @@ Code herschreven door Tim en @hous3m4ster, nu crash ik tenminste niet meer (zo v
 
     # Handle '/weer'
 	elif(command == '/weer'):
-		bot.sendMessage(chat_id, """\
-Stuur je locatie!
-(Dit werkt niet in groepen!)
-""")
+		if api.weather == '':
+			bot.sendMessage(chat_id, "Deze functie is uitgeschakeld.")
+		else:
+			keyboard = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text='Verstuur locatie', request_location=True)],[KeyboardButton(text='Stop', request_location=False)],],one_time_keyboard=True)
+			bot.sendMessage(chat_id, "Wat is je locatie?", reply_markup=keyboard)
+
     # Handle 'location' and show weather
 	elif(lo is not None):
 		if api.weather != '':
-			json_obj=urllib2.urlopen('http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+api.weather)
+			json_obj=urllib.urlopen('http://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+api.weather)
 			data=json.load(json_obj)
 			for i in data['weather']:
 				if i['main']=='Rain':
@@ -209,7 +211,7 @@ Stuur je locatie!
 			celsius = "%.1f" % celsius
 			bot.sendMessage(chat_id, "Het is "+celsius+" graden.")
 		else:
-			bot.sendMessage(chat_id, "Deze functie is momenteel niet geactiveerd. Er is geen API token opgegeven.")
+			bot.sendMessage(chat_id, "Deze functie is uitgeschakeld.")
 
 bot = telepot.Bot(api.token)
 
