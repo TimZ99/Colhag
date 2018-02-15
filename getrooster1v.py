@@ -1,5 +1,5 @@
 import requests
-page = requests.get("http://hageveld.mwp.nl/rooster/dagrooster/Ver_Kla.htm").text
+page = requests.get("http://hageveld.nl/rooster/dagrooster/Ver_Kla.htm").text
 ro = page.find(">1v<")
 if ro == -1:
     roosterwijziging = "false"
